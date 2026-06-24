@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nara — Teknik Informatika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e2a;
+    --border: rgba(255,255,255,0.08);
+    --accent: #7c6df2;
+    --accent2: #a78bfa;
+    --text: #e8eaf0;
+    --muted: #8890a4;
+    --green: #34d399;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(13,15,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--accent2);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 6rem 2.5rem 4rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .hero-inner { width: 100%; }
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .hero-name {
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .hero-name span { color: var(--accent2); }
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 0.7rem 1.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent2); }
+
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 3rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 5rem 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .skill-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .skill-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+  .skill-level {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .project-tag {
+    display: inline-block;
+    background: rgba(124,109,242,0.15);
+    color: var(--accent2);
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.06em;
+  }
+  .project-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+  .project-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 1.5rem;
+  }
+  .project-stack {
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+  .tech-pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+  }
+  .project-links { display: flex; gap: 0.75rem; }
+  .project-link {
+    font-size: 0.8rem;
+    color: var(--accent2);
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+  }
+  .project-link:hover { opacity: 0.7; }
+  .project-link::before { content: '→ '; }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+  .about-info { list-style: none; }
+  .about-info li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+  }
+  .about-info li:last-child { border-bottom: none; }
+  .info-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    min-width: 80px;
+    text-transform: uppercase;
+  }
+
+  /* CONTACT */
+  .contact-inner {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+  }
+  .contact-inner h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .contact-inner p {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+  .contact-links {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 4rem 1.25rem; }
+    .hero { padding: 6rem 1.25rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-inner { padding: 2rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">~/nara</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <p class="hero-label">// Teknik Informatika</p>
+    <h1 class="hero-name">Halo, saya <span>Nara</span> 👋</h1>
+    <p class="hero-desc">
+      Mahasiswa Teknik Informatika yang suka membangun aplikasi web. Berpengalaman dengan PHP/Laravel dan pengembangan sistem berbasis database.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">Lihat Proyek</a>
+      <a href="#contact" class="btn btn-outline">Hubungi Saya</a>
+    </div>
+    <div class="hero-status">
+      <span class="dot"></span>
+      Tersedia untuk kolaborasi & internship
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">// 01</p>
+  <h2 class="section-title">Teknologi & Skill</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML & CSS</div>
+      <div class="skill-level">INTERMEDIATE</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-level">INTERMEDIATE</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐘</div>
+      <div class="skill-name">PHP</div>
+      <div class="skill-level">INTERMEDIATE</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔴</div>
+      <div class="skill-name">Laravel</div>
+      <div class="skill-level">INTERMEDIATE</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">MySQL</div>
+      <div class="skill-level">INTERMEDIATE</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐙</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-level">BEGINNER</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">// 02</p>
+  <h2 class="section-title">Proyek</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <span class="project-tag">KERJA PRAKTIK</span>
+      <h3 class="project-name">Kasirku — Sistem Kasir Web</h3>
+      <p class="project-desc">
+        Aplikasi kasir berbasis web yang dibangun selama Kerja Praktik. Fitur meliputi manajemen produk, transaksi penjualan, laporan, dan manajemen pengguna.
+      </p>
+      <div class="project-stack">
+        <span class="tech-pill">Laravel 10</span>
+        <span class="tech-pill">PHP 8.1</span>
+        <span class="tech-pill">MySQL</span>
+        <span class="tech-pill">Blade</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">GitHub</a>
+        <a href="#" class="project-link">Demo</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">SKRIPSI</span>
+      <h3 class="project-name">Proyek Skripsi</h3>
+      <p class="project-desc">
+        Penelitian dan pengembangan sistem sebagai tugas akhir. Detail akan segera diupdate setelah selesai.
+      </p>
+      <div class="project-stack">
+        <span class="tech-pill">Laravel</span>
+        <span class="tech-pill">MySQL</span>
+        <span class="tech-pill">PHP</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">Segera Hadir</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">PERSONAL</span>
+      <h3 class="project-name">Proyek Berikutnya</h3>
+      <p class="project-desc">
+        Slot ini untuk proyek personalmu berikutnya. Tambahkan proyek dari mata kuliah, tugas, atau eksperimen pribadi.
+      </p>
+      <div class="project-stack">
+        <span class="tech-pill">???</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="project-link">Coming Soon</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">// 03</p>
+  <h2 class="section-title">Tentang Saya</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Saya mahasiswa Teknik Informatika yang tertarik pada pengembangan aplikasi web, khususnya di sisi backend. Saya senang membangun sistem yang nyata dan dapat digunakan langsung oleh pengguna.
+      </p>
+      <p>
+        Selain coding, saya juga sedang memperdalam pemahaman tentang arsitektur sistem dan database untuk mendukung pengembangan aplikasi yang lebih scalable.
+      </p>
+    </div>
+    <ul class="about-info">
+      <li>
+        <span class="info-label">Lokasi</span>
+        <span>Surabaya, Jawa Timur</span>
+      </li>
+      <li>
+        <span class="info-label">Jurusan</span>
+        <span>Teknik Informatika</span>
+      </li>
+      <li>
+        <span class="info-label">Focus</span>
+        <span>Web Development</span>
+      </li>
+      <li>
+        <span class="info-label">Status</span>
+        <span>Open to Opportunities</span>
+      </li>
+      <li>
+        <span class="info-label">Email</span>
+        <span>email@kamu.com</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">// 04</p>
+  <h2 class="section-title">Kontak</h2>
+  <div class="contact-inner">
+    <h3>Mari Berkolaborasi!</h3>
+    <p>Punya proyek menarik atau ingin berdiskusi? Jangan ragu untuk menghubungi saya.</p>
+    <div class="contact-links">
+      <a href="mailto:email@kamu.com" class="btn btn-primary">Email Saya</a>
+      <a href="https://github.com/usernamekamu" target="_blank" class="btn btn-outline">GitHub</a>
+      <a href="https://linkedin.com/in/usernamekamu" target="_blank" class="btn btn-outline">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>dibuat dengan ❤️ oleh Nara · 2025</p>
+</footer>
+
+</body>
+</html>
